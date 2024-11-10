@@ -94,7 +94,6 @@ const feynmanRequestServer = function(params, callback) {
         } else if (result.code == -1006) {
             console.log('账号过期，请重新登录');
             // localStorage.clear();
-            location.href = './index.html?t=' + Math.random();
         } else {
             callback(null, result);
         }

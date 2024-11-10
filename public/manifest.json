@@ -13,12 +13,10 @@
           "./libs/html2canvas.js",
           "./libs/qrcode.js",
           "./libs/lodash.js",
-          "./tools.js",
-          "./feynman.js"
+          "./injectorBtn.js"
       ],
       "css": [
-          "./pagenote-5.4.7/pagenote.css",
-          "./feynman.css"
+          "./pagenote-5.4.7/pagenote.css"
       ],
       "matches": [
           "https://*/*",
@@ -34,8 +32,7 @@
       "activeTab",
       "scripting",
       "browsingData",
-      "cookies",
-      "<all_urls>"
+      "cookies"
   ],
   "background": {
       "service_worker": "background.js"

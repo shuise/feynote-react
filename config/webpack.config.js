@@ -44,11 +44,13 @@ const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
   paths: [babelRuntimeEntry],
 });
 
+console.log(paths);
+
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
-const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
+const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'false';
 const disableESLintPlugin = process.env.DISABLE_ESLINT_PLUGIN === 'true';
 
 const imageInlineSizeLimit = parseInt(
@@ -106,6 +108,7 @@ module.exports = function (webpackEnv) {
 
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
+    console.log(1);
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
@@ -200,17 +203,26 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: paths.appIndexJs,
+    // entry: paths.appIndexJs,
+      entry: {
+        // 入口文件自定义name: 路径
+        index: paths.appIndexJs,
+        background: paths.background,
+        injectorBtn: paths.injectorBtn
+      },
     output: {
       // The build folder.
-      path: paths.appBuild,
+      // path: paths.appBuild,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+      path: path.resolve(__dirname, '../build'),
+    //  【name】使用entry配置的自定义name作为文件名，这里将输出到/dist/static/js/文件夹下
+      filename: '[name].js',
+      // filename: isEnvProduction
+        // ? 'static/js/[name].[contenthash:8].js'
+        // : isEnvDevelopment && 'static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
@@ -570,6 +582,7 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
+            chunks: ['manifest', 'vendor', 'index']  // 输出的html文件引入的入口chunk
           },
           isEnvProduction
             ? {
@@ -589,6 +602,7 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -642,7 +656,8 @@ module.exports = function (webpackEnv) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
-          const entrypointFiles = entrypoints.main.filter(
+          console.log(6, entrypoints.main)
+          const entrypointFiles = (entrypoints.main || []).filter(
             fileName => !fileName.endsWith('.map')
           );
 

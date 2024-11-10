@@ -58,6 +58,8 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
+  background: resolveModule(resolveApp, 'src/background'),
+  injectorBtn: resolveModule(resolveApp, 'src/injector'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),

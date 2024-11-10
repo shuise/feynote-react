@@ -1,4 +1,4 @@
-window.CRS = {};
+var CRS = {};
 
 CRS.templateCache = {};
 CRS.components = {};
@@ -450,7 +450,6 @@ CRS.getLocalImageData = function(file, callback){
     }
 }
 
-
 CRS.print = function(obj){
     var newWindow = window.open("打印窗口","_blank");
     var docStr = obj.innerHTML;
@@ -463,3 +462,5 @@ CRS.print = function(obj){
     newWindow.print();
     newWindow.close();
 }
+
+export default CRS
