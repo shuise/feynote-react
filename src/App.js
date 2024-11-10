@@ -1,15 +1,28 @@
-import bannerImg from './assets/Feynman.jpg';
+import {
+  BrowserRouter, HashRouter,
+  Routes,
+  Route,
+  Link,
+  useParams
+} from "react-router-dom";
+
+import './App.css';
+
+import Menu from './pages/menu';
+
+import Homepage from './pages/homepage';
+import List from './pages/list';
 
 function App() {
-  return (
-    <div style={{ width: '300px', padding: '20px'}}>
-      <img src={ bannerImg } alt="" style={{ width:"100%"}} />
-      <h1 style={{ fontSize: "16px", textAlign: "center"}}>
-        <a href="https://notes.bluetech.top/" target="_blank">安装笔记工具</a>，
-        像费曼一样思考、分享
-      </h1>
-    </div>
-  );
+    return (<div className="App">
+      <Menu />
+        <BrowserRouter>
+            <Routes>
+                <Route exact path="/" element={ <Homepage /> } />
+                <Route exact path="/list" element={ <List /> } />
+            </Routes>
+        </BrowserRouter>
+    </div>);
 }
 
 export default App;

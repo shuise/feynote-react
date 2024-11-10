@@ -118,6 +118,7 @@ const feynmanRequestServer = function(params, callback) {
 //接受创建请求
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
+        console.log('back', request);
         if(request.type == 'request'){
             feynmanRequestServer(request, function(err, res){
                 res = res || {};
@@ -152,3 +153,28 @@ chrome.runtime.onMessage.addListener(
         }
     }
 );
+
+
+chrome.contextMenus.create({
+    type: 'normal',
+    title: 'Menu Demo',
+    id: 'menuDemo',
+    contexts: ['all'],
+}, function () {
+    console.log('contextMenus are create.');
+});
+
+chrome.contextMenus.onClicked.addListener(function(info, tab) {
+    console.log('receive.', info, tab);
+
+    chrome.tabs.sendMessage(tab.id, {
+        'contextMenuId': info.menuItemId, 
+        'info': info,
+        'data': 'test vv'
+    }, function(response) {
+        console.log('send.', tab.id);
+    });
+});
+
+
+

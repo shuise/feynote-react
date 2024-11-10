@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import NumericFormat from 'react-number-format';
 
-import CRS from './tools';
+import CRS from '../utils/tools';
 import './feynman.css';
 
 export default function FeynmanBtn(){
