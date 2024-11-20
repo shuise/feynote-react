@@ -42,6 +42,14 @@
       "js": [
         "../content.ts"
       ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "static/content.tsx"
+      ]
     }
   ],
   "host_permissions": [
