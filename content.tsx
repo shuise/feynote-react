@@ -4,7 +4,17 @@ import type { PlasmoRender } from "plasmo";
 
 import Injector from "./content/injector";
 
-export const getRootContainer = () => document.getElementById("FeynmanWrapper");
+export const getRootContainer = () => {
+  let id = "feynotes-wrapper";
+  let FeynmanWrapper = document.getElementById(id);
+  if (FeynmanWrapper) {
+    return FeynmanWrapper;
+  }
+  FeynmanWrapper = document.createElement("div");
+  FeynmanWrapper.id = id;
+  document.body.appendChild(FeynmanWrapper);
+  return FeynmanWrapper;
+};
 
 export const render: any = async ({
   anchor, // the observed anchor, OR document.body.
